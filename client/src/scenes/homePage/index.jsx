@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
+import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
 
 function HomePage() {
@@ -14,6 +15,7 @@ function HomePage() {
         <UserWidget userId={_id} picturePath={picturePath} />
         <div className="col-span-2">
           <MyPostWidget picturePath={picturePath} />
+          <PostsWidget userId={_id} />
         </div>
         <div className="bg-green-500"></div>
       </div>

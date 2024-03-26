@@ -5,10 +5,12 @@ import { BsEmojiSmile } from "react-icons/bs";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import Picker from "emoji-picker-react";
 
 const MyPostWidget = ({ picturePath }) => {
   const [image, setImage] = useState(null);
   const [isImage, setIsImage] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
   const dispatch = useDispatch();
   const [post, setPost] = useState("");
   const { _id } = useSelector((state) => state.user);
@@ -29,6 +31,7 @@ const MyPostWidget = ({ picturePath }) => {
       body: formData,
     });
     const posts = await response.json();
+    console.log(posts);
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");
@@ -41,7 +44,7 @@ const MyPostWidget = ({ picturePath }) => {
         <input
           type="text"
           value={post}
-          onChange={(e) => setPost(e.target.value)}
+          onChange={(e) => setPost((prev) => (prev = e.target.value))}
           placeholder="What's on your mind..."
           className="bg-dimWhite w-full px-6 py-4 rounded-full dark:bg-slate-800 dark:text-white"
         />
@@ -89,10 +92,14 @@ const MyPostWidget = ({ picturePath }) => {
           <MdOutlineImage className="text-2xl  dark:text-primary" />
           <p className="dark:text-white">Photo</p>
         </div>
-        <div className="flex items-center gap-1 cursor-pointer hover:scale-90 transition-all">
+        <div
+          onClick={() => setShowPicker(!showPicker)}
+          className="flex items-center gap-1 cursor-pointer hover:scale-90 transition-all"
+        >
           <BsEmojiSmile className="text-xl  dark:text-primary" />
           <p className="dark:text-white">Emoji</p>
         </div>
+
         <div className="w-full  grid">
           <button
             type="submit"
@@ -103,6 +110,12 @@ const MyPostWidget = ({ picturePath }) => {
           </button>
         </div>
       </div>
+      {showPicker && (
+        <Picker
+          style={{ position: "absolute", bottom: "0px" }}
+          onEmojiClick={(emoji) => setPost((prev) => (prev += emoji.emoji))}
+        />
+      )}
     </div>
   );
 };
