@@ -42,7 +42,7 @@ function Navbar() {
               type="text"
               id="search"
               placeholder="search"
-              className="py-2 px-6 w-64 bg-dimWhite dark:bg-slate-800 rounded-md  focus:outline-none"
+              className="py-2 px-6 w-64 bg-dimWhite dark:bg-slate-800 dark:text-white rounded-md  focus:outline-none"
             />
             <a
               href="#search"
