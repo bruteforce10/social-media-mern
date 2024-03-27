@@ -9,7 +9,7 @@ function HomePage() {
   const { _id, picturePath } = useSelector((state) => state.user);
 
   return (
-    <div className="h-screen">
+    <div className="pb-14">
       <Navbar />
       <div className="mt-4 grid grid-cols-4 gap-4 max-w-[1240px] max-sm:px-4 px-8 mx-auto ">
         <UserWidget userId={_id} picturePath={picturePath} />

@@ -1,6 +1,10 @@
 import Friend from "components/Friend";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BiCommentDetail } from "react-icons/bi";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { LuShare2 } from "react-icons/lu";
+import { setPost } from "state";
 
 const PostWidget = ({
   postId,
@@ -16,16 +20,55 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const loggedInUserId = useSelector((state) => state.user._id);
   const token = useSelector((state) => state.token);
-  const isLiked = Boolean(likes[loggedInUserId]);
-  const likeCount = Object.keys(likes).length;
+  const [isLiked, setLiked] = useState(likes[loggedInUserId]);
+  const [likeCount, setLikeCount] = useState(Object.keys(likes).length);
+
+  const patchLike = async () => {
+    const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: loggedInUserId }),
+    });
+    const updatedPost = await response.json();
+    setLiked(updatedPost.likes[loggedInUserId]);
+    setLikeCount(Object.keys(updatedPost.likes).length);
+    dispatch(setPost({ post: updatedPost }));
+  };
 
   return (
-    <div>
+    <div className="bg-white my-6 p-4 rounded-xl space-y-4">
       <Friend
         friendId={postUserId}
         name={name}
         userPicturePath={userPicturePath}
       />
+      <p>{description}</p>
+      {picturePath && (
+        <img
+          width="100%"
+          height="auto"
+          alt="post"
+          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+          src={`http://localhost:3001/assets/${picturePath}`}
+        />
+      )}
+      <div className="flex gap-4">
+        <div className="flex gap-1 items-center" onClick={patchLike}>
+          {isLiked ? (
+            <AiFillHeart className="text-red-500 text-xl cursor-pointer" />
+          ) : (
+            <AiOutlineHeart className="text-2xl cursor-pointer" />
+          )}
+          <p>{likeCount}</p>
+        </div>
+        <BiCommentDetail className="text-2xl cursor-pointer" />
+        <div className="w-full">
+          <LuShare2 className="text-2xl cursor-pointer ml-auto" />
+        </div>
+      </div>
     </div>
   );
 };

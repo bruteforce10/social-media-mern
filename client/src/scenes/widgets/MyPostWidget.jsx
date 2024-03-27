@@ -39,8 +39,10 @@ const MyPostWidget = ({ picturePath }) => {
 
   return (
     <div className="bg-white dark:bg-black px-4 py-4 rounded-xl space-y-4">
-      <div className="flex gap-4">
-        <UserImages image={picturePath} />
+      <div className="flex gap-4 items-center">
+        <div>
+          <UserImages image={picturePath} size={"50px"} />
+        </div>
         <input
           type="text"
           value={post}

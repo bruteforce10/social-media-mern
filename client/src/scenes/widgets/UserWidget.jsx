@@ -29,7 +29,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const { firstName, lastName, viewedProfile, impressions } = user;
 
   return (
-    <div className="bg-white dark:bg-black px-4 py-8 rounded-xl divide-y space-y-4 flex flex-col">
+    <div className="bg-white dark:bg-black px-4 py-8 rounded-xl divide-y space-y-4 flex flex-col h-fit">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <UserImages image={picturePath} />

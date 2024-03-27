@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import PostWidget from "./PostWidget";
 
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <>
+    <div className="space-y-8">
       {posts.map(
         ({
           _id,
@@ -49,7 +50,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           likes,
           comments,
         }) => (
-          <PostsWidget
+          <PostWidget
             key={_id}
             postId={_id}
             postUserId={userId}
@@ -62,7 +63,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           />
         )
       )}
-    </>
+    </div>
   );
 };
 

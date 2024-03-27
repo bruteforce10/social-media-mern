@@ -1,12 +1,17 @@
 import React from "react";
 
-const UserImages = ({ image }) => {
+const UserImages = ({ image, size }) => {
   return (
-    <div className={`w-14`}>
+    <div style={{ width: size, height: size }}>
       <img
         src={`http://localhost:3001/assets/${image}`}
         alt="user"
-        className={`object-cover rounded-full `}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+          borderRadius: "50%",
+        }}
       />
     </div>
   );
