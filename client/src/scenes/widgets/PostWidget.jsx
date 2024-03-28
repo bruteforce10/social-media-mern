@@ -39,7 +39,7 @@ const PostWidget = ({
   };
 
   return (
-    <div className="bg-white my-6 p-4 rounded-xl space-y-4">
+    <div className="bg-white dark:bg-black dark:text-white my-6 p-4 rounded-xl space-y-4">
       <Friend
         friendId={postUserId}
         name={name}
@@ -64,11 +64,24 @@ const PostWidget = ({
           )}
           <p>{likeCount}</p>
         </div>
-        <BiCommentDetail className="text-2xl cursor-pointer" />
+        <div
+          className="flex gap-1 items-center"
+          onClick={() => setComments(!isComments)}
+        >
+          <BiCommentDetail className="text-2xl cursor-pointer" />
+          <p>{comments.length}</p>
+        </div>
         <div className="w-full">
           <LuShare2 className="text-2xl cursor-pointer ml-auto" />
         </div>
       </div>
+      {isComments &&
+        comments.map((comment, index) => (
+          <div key={index} className="group">
+            <p>{comment}</p>
+            <div className="w-full h-[.5px] opacity-20 group-last:hidden bg-black"></div>
+          </div>
+        ))}
     </div>
   );
 };

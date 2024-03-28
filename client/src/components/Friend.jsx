@@ -12,7 +12,9 @@ const Friend = ({ friendId, name, userPicturePath }) => {
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
 
-  const isFriend = friends.find((friend) => friend === friendId);
+  const isFriend = friends.find((friend) => friend._id === friendId);
+
+  console.log(isFriend);
 
   const patchFriend = async () => {
     const response = await fetch(

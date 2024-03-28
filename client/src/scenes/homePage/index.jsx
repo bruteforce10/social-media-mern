@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
+import FriendsListWidget from "scenes/widgets/FriendsListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -17,7 +18,9 @@ function HomePage() {
           <MyPostWidget picturePath={picturePath} />
           <PostsWidget userId={_id} />
         </div>
-        <div className="bg-green-500"></div>
+        <div>
+          <FriendsListWidget userId={_id} />
+        </div>
       </div>
     </div>
   );

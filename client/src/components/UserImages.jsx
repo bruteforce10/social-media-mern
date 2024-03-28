@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserImages = ({ image, size }) => {
+const UserImages = ({ image, size = "50px" }) => {
   return (
     <div style={{ width: size, height: size }}>
       <img
