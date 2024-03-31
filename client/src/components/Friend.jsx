@@ -33,7 +33,10 @@ const Friend = ({ friendId, name, userPicturePath }) => {
 
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-2">
+      <div
+        className="flex items-center gap-2 cursor-pointer hover:underline"
+        onClick={() => navigate(`/profile/${friendId}`)}
+      >
         <UserImages image={userPicturePath} size="50px" />
         <p>{name}</p>
       </div>

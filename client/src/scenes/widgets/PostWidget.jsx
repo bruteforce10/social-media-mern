@@ -22,6 +22,7 @@ const PostWidget = ({
   const token = useSelector((state) => state.token);
   const [isLiked, setLiked] = useState(likes[loggedInUserId]);
   const [likeCount, setLikeCount] = useState(Object.keys(likes).length);
+  const [createComment, setCreateComment] = useState("");
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
@@ -35,6 +36,25 @@ const PostWidget = ({
     const updatedPost = await response.json();
     setLiked(updatedPost.likes[loggedInUserId]);
     setLikeCount(Object.keys(updatedPost.likes).length);
+    dispatch(setPost({ post: updatedPost }));
+  };
+
+  const handleComment = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`http://localhost:3001/posts/comment`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: loggedInUserId,
+        id: postId,
+        comment: createComment,
+      }),
+    });
+    const updatedPost = await response.json();
+    setCreateComment("");
     dispatch(setPost({ post: updatedPost }));
   };
 
@@ -75,13 +95,34 @@ const PostWidget = ({
           <LuShare2 className="text-2xl cursor-pointer ml-auto" />
         </div>
       </div>
-      {isComments &&
-        comments.map((comment, index) => (
-          <div key={index} className="group">
-            <p>{comment}</p>
-            <div className="w-full h-[.5px] opacity-20 group-last:hidden bg-black"></div>
+      <form onSubmit={handleComment} className="space-y-4">
+        {isComments &&
+          comments.map((comment, index) => (
+            <div key={index} className="group">
+              <p>{comment}</p>
+              <div className="w-full h-[.5px] opacity-20 group-last:hidden bg-black"></div>
+            </div>
+          ))}
+        {isComments && (
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={createComment}
+              onChange={(e) =>
+                setCreateComment((prev) => (prev = e.target.value))
+              }
+              className="bg-dimWhite w-full px-6 py-2 rounded-full dark:bg-slate-800 dark:text-white"
+            />
+            <button
+              type="submit"
+              className="bg-primary transition-all py-2 ml-auto hover:bg-secondary hover:text-white rounded-full px-4 text-secondary"
+            >
+              Comment
+            </button>
           </div>
-        ))}
+        )}
+      </form>
     </div>
   );
 };

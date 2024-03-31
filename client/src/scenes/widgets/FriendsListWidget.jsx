@@ -25,7 +25,7 @@ const FriendsListWidget = ({ userId }) => {
   }, []);
 
   return (
-    <div className="dark:bg-black bg-white p-4 rounded-xl space-y-6">
+    <div className="dark:bg-black dark:text-white bg-white p-4 rounded-xl space-y-6">
       <p className="text-lg font-medium">Friends List</p>
       <div className="space-y-4">
         {friends.map((friend) => (

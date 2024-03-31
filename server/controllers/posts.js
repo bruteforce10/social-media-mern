@@ -2,6 +2,30 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 // CREATE
+
+export const createComment = async (req, res) => {
+  try {
+    const { userId, id, comment } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          comments: comment,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   try {
     const { userId, description, picturePath } = req.body;
