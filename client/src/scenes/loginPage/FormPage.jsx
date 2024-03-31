@@ -59,7 +59,7 @@ const FormPage = () => {
     }
     formData.append("picturePath", values.picture.name);
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "https://server-umber-six.vercel.app/auth/register",
       {
         method: "POST",
         body: formData,
@@ -74,11 +74,14 @@ const FormPage = () => {
   };
 
   const login = async (values, actions) => {
-    const loggedResponse = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
+    const loggedResponse = await fetch(
+      "https://server-umber-six.vercel.app/auth/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      }
+    );
     const loggedIn = await loggedResponse.json();
     actions.resetForm();
     console.log(loggedIn);

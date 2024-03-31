@@ -18,7 +18,7 @@ const Friend = ({ friendId, name, userPicturePath }) => {
 
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/user/${_id}/${friendId}`,
+      `https://server-umber-six.vercel.app/user/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

@@ -25,14 +25,17 @@ const PostWidget = ({
   const [createComment, setCreateComment] = useState("");
 
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
+    const response = await fetch(
+      `https://server-umber-six.vercel.app/posts/${postId}/like`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      }
+    );
     const updatedPost = await response.json();
     setLiked(updatedPost.likes[loggedInUserId]);
     setLikeCount(Object.keys(updatedPost.likes).length);
@@ -41,18 +44,21 @@ const PostWidget = ({
 
   const handleComment = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3001/posts/comment`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: loggedInUserId,
-        id: postId,
-        comment: createComment,
-      }),
-    });
+    const response = await fetch(
+      `https://server-umber-six.vercel.app/posts/comment`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: loggedInUserId,
+          id: postId,
+          comment: createComment,
+        }),
+      }
+    );
     const updatedPost = await response.json();
     setCreateComment("");
     dispatch(setPost({ post: updatedPost }));
@@ -72,7 +78,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${picturePath}`}
+          src={`https://server-umber-six.vercel.app/assets/${picturePath}`}
         />
       )}
       <div className="flex gap-4">
