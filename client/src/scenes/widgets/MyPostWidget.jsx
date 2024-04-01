@@ -40,7 +40,15 @@ const MyPostWidget = ({ picturePath }) => {
     <div className="bg-white dark:bg-black px-4 py-4 rounded-xl space-y-4">
       <div className="flex gap-4 items-center">
         <div>
-          <UserImages image={picturePath} size={"50px"} />
+          {picturePath !== "undefined" ? (
+            <UserImages image={picturePath} size={"50px"} />
+          ) : (
+            <img
+              src="/assets/profile.png"
+              alt="profile"
+              className="w-[50px] rounded-full"
+            />
+          )}
         </div>
         <input
           type="text"

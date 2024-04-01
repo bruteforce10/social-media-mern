@@ -32,9 +32,9 @@ function HomePage() {
   };
 
   return (
-    <div className="pb-14">
+    <div className="pb-14 min-h-screen">
       <Navbar />
-      <div className="mt-4 grid grid-cols-4 gap-4 max-w-[1240px] max-sm:px-4 px-8 mx-auto  ">
+      <div className="mt-4 grid grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-1 gap-4 max-w-[1240px] max-sm:px-4 px-8 mx-auto  ">
         <UserWidget userId={_id} picturePath={picturePath} />
         <div className="col-span-2">
           <MyPostWidget picturePath={picturePath} />

@@ -57,7 +57,7 @@ const FormPage = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    formData.append("picturePath", values?.picture?.name);
     const savedUserResponse = await fetch(
       `${process.env.REACT_APP_SERVER}/auth/register`,
       {
@@ -67,7 +67,7 @@ const FormPage = () => {
     );
     const savedUser = await savedUserResponse.json();
     actions.resetForm();
-    if (savedUser) {
+    if (!savedUser.error) {
       setPageType("login");
       return;
     }

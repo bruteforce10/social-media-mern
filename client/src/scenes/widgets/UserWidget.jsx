@@ -1,5 +1,5 @@
-import UserImages from "components/UserImages";
 import React, { useEffect, useState } from "react";
+import UserImages from "components/UserImages";
 import { useSelector } from "react-redux";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { MdOutlineEdit } from "react-icons/md";
@@ -32,10 +32,19 @@ const UserWidget = ({ userId, picturePath }) => {
   const { firstName, lastName, viewedProfile, impressions } = user;
 
   return (
-    <div className="bg-white dark:bg-black px-4 py-8 rounded-xl divide-y space-y-4 flex flex-col h-fit">
+    <div className="bg-white dark:bg-black max-md:hidden px-4 py-8 rounded-xl divide-y space-y-4 flex flex-col h-fit">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <UserImages image={picturePath} />
+          {picturePath !== "undefined" ? (
+            <UserImages image={picturePath} />
+          ) : (
+            <img
+              src="/assets/profile.png"
+              alt="profile"
+              className="w-[50px] rounded-full"
+            />
+          )}
+
           <p className="dark:text-white text-lg font-medium">
             {firstName + " " + lastName}
           </p>
@@ -57,7 +66,7 @@ const UserWidget = ({ userId, picturePath }) => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex gap-4">
             <img
-              src="./assets/twitter.png"
+              src="/assets/twitter.png"
               alt="twitter"
               className="object-contain w-[30px]"
             />
@@ -73,7 +82,7 @@ const UserWidget = ({ userId, picturePath }) => {
         <div className="flex items-center justify-between">
           <div className="flex gap-4">
             <img
-              src="./assets/linkedin.png"
+              src="/assets/linkedin.png"
               alt="linkedin"
               className="object-contain w-[30px]"
             />

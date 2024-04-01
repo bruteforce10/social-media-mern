@@ -56,7 +56,13 @@ export const getFeedPosts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 4;
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const post = await Post.find().limit(limit).skip(startIndex);
+    const searchTerm = req.query.searchTerm || "";
+    const post = await Post.find({
+      description: { $regex: searchTerm, $options: "i" },
+    })
+      .sort({ createdAt: "desc" })
+      .limit(limit)
+      .skip(startIndex);
 
     res.status(200).json(post);
   } catch (err) {

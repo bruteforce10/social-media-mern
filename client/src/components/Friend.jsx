@@ -13,8 +13,9 @@ const Friend = ({ friendId, name, userPicturePath }) => {
   const friends = useSelector((state) => state.user.friends);
   const isFriend = friends.find((friend) => friend._id === friendId);
   const isMe = Boolean(_id === friendId);
+  const isPicture = Boolean(userPicturePath === "undefined");
 
-  console.log(isMe);
+  console.log(isPicture);
 
   const patchFriend = async () => {
     const response = await fetch(
@@ -37,7 +38,16 @@ const Friend = ({ friendId, name, userPicturePath }) => {
         className="flex items-center gap-2 cursor-pointer hover:underline"
         onClick={() => navigate(`/profile/${friendId}`)}
       >
-        <UserImages image={userPicturePath} size="50px" />
+        {isPicture ? (
+          <img
+            src="/assets/profile.png"
+            alt="profile"
+            className="w-[50px] rounded-full"
+          />
+        ) : (
+          <UserImages image={userPicturePath} size="50px" />
+        )}
+
         <p>{name}</p>
       </div>
       <div onClick={() => patchFriend()}>

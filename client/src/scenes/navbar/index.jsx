@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { BsChatDots, BsQuestionCircle } from "react-icons/bs";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setLogout } from "state";
+import { setLogout, setPosts } from "state";
 import { IoIosArrowDown } from "react-icons/io";
 import clsx from "clsx";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -14,11 +14,28 @@ import { setMode } from "state";
 function Navbar() {
   const user = useSelector((state) => state.user);
   const theme = useSelector((state) => state.mode);
+  const token = useSelector((state) => state.token);
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const [isMenu, setIsMenu] = React.useState(false);
   const fullname = user ? `${user.firstName} ${user.lastName}` : "no name";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = async () => {
+    const urlParams = new URLSearchParams();
+    urlParams.set("searchTerm", search);
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER}/posts?${urlParams.toString()}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const posts = await response.json();
+    dispatch(setPosts({ posts }));
+    console.log(search);
+  };
 
   return (
     <div className="bg-white dark:bg-black transition-all w-full py-4">
@@ -40,16 +57,18 @@ function Navbar() {
           <div className="hidden sm:grid sm:relative">
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               id="search"
               placeholder="search"
               className="py-2 px-6 w-64 bg-dimWhite dark:bg-slate-800 dark:text-white rounded-md  focus:outline-none"
             />
-            <a
-              href="#search"
-              className="text-3xl text-primary absolute place-self-center  right-3"
+            <div
+              onClick={handleSearch}
+              className="text-3xl text-primary absolute place-self-center cursor-pointer right-3"
             >
               <IoIosSearch />
-            </a>
+            </div>
           </div>
         </div>
 
