@@ -6,6 +6,7 @@ import Dropzone from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "state";
+import Swal from "sweetalert2";
 
 const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
 
@@ -66,32 +67,50 @@ const FormPage = () => {
     );
     const savedUser = await savedUserResponse.json();
     actions.resetForm();
-
     if (savedUser) {
       setPageType("login");
+      return;
     }
+    Swal.fire({
+      title: "Error!",
+      text: "email already exists",
+      icon: "error",
+      confirmButtonColor: "#5AAFEF",
+      confirmButtonText: "Cool",
+    });
   };
 
   const login = async (values, actions) => {
-    const loggedResponse = await fetch(
-      `${process.env.REACT_APP_SERVER}/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      }
-    );
-    const loggedIn = await loggedResponse.json();
-    actions.resetForm();
-    console.log(loggedIn);
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
+    try {
+      const loggedResponse = await fetch(
+        `${process.env.REACT_APP_SERVER}/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        }
       );
-      navigate("/home");
+      const loggedIn = await loggedResponse.json();
+      actions.resetForm();
+      if (loggedIn?.user) {
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token,
+          })
+        );
+        navigate("/home");
+        return;
+      }
+      Swal.fire({
+        title: "Error!",
+        text: loggedIn.msg,
+        icon: "error",
+        confirmButtonColor: "#5AAFEF",
+        confirmButtonText: "Cool",
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
