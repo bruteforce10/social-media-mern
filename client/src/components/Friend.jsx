@@ -11,14 +11,14 @@ const Friend = ({ friendId, name, userPicturePath }) => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-
   const isFriend = friends.find((friend) => friend._id === friendId);
+  const isMe = Boolean(_id === friendId);
 
-  console.log(isFriend);
+  console.log(isMe);
 
   const patchFriend = async () => {
     const response = await fetch(
-      `https://server-umber-six.vercel.app/user/${_id}/${friendId}`,
+      `${process.env.REACT_APP_SERVER}/user/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {
@@ -46,9 +46,11 @@ const Friend = ({ friendId, name, userPicturePath }) => {
             <BsFillPersonDashFill className="text-xl text-primary" />
           </button>
         ) : (
-          <button>
-            <BsFillPersonPlusFill className="text-xl text-primary" />
-          </button>
+          !isMe && (
+            <button>
+              <BsFillPersonPlusFill className="text-xl text-primary" />
+            </button>
+          )
         )}
       </div>
     </div>

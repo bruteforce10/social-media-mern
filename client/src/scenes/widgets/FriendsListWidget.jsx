@@ -10,7 +10,7 @@ const FriendsListWidget = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `https://server-umber-six.vercel.app/user/${userId}/friends`,
+      `${process.env.REACT_APP_SERVER}/user/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

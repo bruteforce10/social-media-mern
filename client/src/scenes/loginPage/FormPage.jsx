@@ -52,14 +52,13 @@ const FormPage = () => {
   const navigate = useNavigate();
 
   const register = async (values, actions) => {
-    console.log(values);
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
     const savedUserResponse = await fetch(
-      "https://server-umber-six.vercel.app/auth/register",
+      `${process.env.REACT_APP_SERVER}/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -75,7 +74,7 @@ const FormPage = () => {
 
   const login = async (values, actions) => {
     const loggedResponse = await fetch(
-      "https://server-umber-six.vercel.app/auth/login",
+      `${process.env.REACT_APP_SERVER}/auth/login`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

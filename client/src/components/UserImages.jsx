@@ -4,7 +4,7 @@ const UserImages = ({ image, size = "50px" }) => {
   return (
     <div style={{ width: size, height: size }}>
       <img
-        src={`https://server-umber-six.vercel.app/assets/${image}`}
+        src={`${process.env.REACT_APP_SERVER}/assets/${image}`}
         alt="user"
         style={{
           objectFit: "cover",

@@ -14,7 +14,7 @@ function ProfilePage() {
 
   const getUser = async () => {
     const response = await fetch(
-      `https://server-umber-six.vercel.app/user/${userId}`,
+      `${process.env.REACT_APP_SERVER}/user/${userId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

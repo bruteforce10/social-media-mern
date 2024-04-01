@@ -25,13 +25,12 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picturePath", image?.picture?.name);
     }
 
-    const response = await fetch(`https://server-umber-six.vercel.app/posts`, {
+    const response = await fetch(`${process.env.REACT_APP_SERVER}/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
     });
     const posts = await response.json();
-    console.log(posts);
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");

@@ -26,7 +26,7 @@ const PostWidget = ({
 
   const patchLike = async () => {
     const response = await fetch(
-      `https://server-umber-six.vercel.app/posts/${postId}/like`,
+      `${process.env.REACT_APP_SERVER}/posts/${postId}/like`,
       {
         method: "PATCH",
         headers: {
@@ -45,7 +45,7 @@ const PostWidget = ({
   const handleComment = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      `https://server-umber-six.vercel.app/posts/comment`,
+      `${process.env.REACT_APP_SERVER}/posts/comment`,
       {
         method: "POST",
         headers: {
@@ -78,7 +78,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://server-umber-six.vercel.app/assets/${picturePath}`}
+          src={`${process.env.REACT_APP_SERVER}/assets/${picturePath}`}
         />
       )}
       <div className="flex gap-4">

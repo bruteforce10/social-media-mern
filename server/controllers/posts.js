@@ -54,7 +54,10 @@ export const createPost = async (req, res) => {
 // READ
 export const getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find();
+    const limit = parseInt(req.query.limit) || 4;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const post = await Post.find().limit(limit).skip(startIndex);
+
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
